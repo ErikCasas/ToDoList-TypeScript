@@ -1,4 +1,4 @@
-import { Schema, model, Model } from 'mongoose';
+import { Schema, model, Model } from "mongoose"
 import { Role, User } from '../types';
 
 const userSchema = new Schema({
@@ -18,7 +18,7 @@ const userSchema = new Schema({
     trim: true,
   },
   role: {
-    type: String as Role,
+    type: String,
     require: true,
     trim: true,
   }

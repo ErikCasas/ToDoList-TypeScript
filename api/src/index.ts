@@ -4,8 +4,17 @@ import db from './config';
 
 const PORT = process.env.PORT || 3003;
 
+// Función para iniciar el servidor
+const startServer = async () => {
+  await db();
+  const server = app.listen(PORT, () => console.log('server on PORT =>', PORT));
+  return server;
+}
 
-const server = (() => {
-  db();
-  app.listen(PORT, () => console.log('server on PORT =>', PORT));
-})();
+// Inicio del servidor solo si este archivo se ejecuta directamente
+if (require.main === module) {
+  startServer();
+}
+
+// Exportación del servidor
+export {startServer, app};
