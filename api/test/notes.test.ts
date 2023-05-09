@@ -1,17 +1,13 @@
 import supertest from 'supertest';
-import { startServer, app } from '../src/index';
+import { app } from '../src/index';
 const request = supertest(app);
 
-let server:any;
 
-beforeAll(async () => {
-  server = await startServer();
+describe('rutas para las notas', () => {
+  test('The path responds with a JSON', async () => {
+    await request.get('/notes/getAll')
+    .expect(202)
+    .expect('Content-Type', /application\/json/)
+  });
 });
 
-afterAll(() => {
-  server.close();
-});
-
-describe('Ruta para crear una nota', () => {});
-
-// afterAll(() => app.close());

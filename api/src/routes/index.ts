@@ -1,3 +1,9 @@
+import { Router } from 'express';
 
+const rute = Router();
 
-// rutas.get('/pinocho', validateToken, peticiones)
+// rute.use()
+// rute.use()
+
+export default rute;
+// rutas.get('/pinocho', validateToken, otrafuncion)
