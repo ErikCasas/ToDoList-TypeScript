@@ -15,6 +15,6 @@ export interface User extends Document {
   passwordHash: string;
   email: string;
   name: string;
-  notes: Array;
+  collections: Array;
   role: Role;
 }
