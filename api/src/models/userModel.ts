@@ -1,38 +1,30 @@
-import { Schema, model, Model } from "mongoose"
+import { Schema, model, Model } from 'mongoose';
 import { User } from '../types';
+import collectionSchema from './ColectionsModel';
 
 const userSchema = new Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
     trim: true,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     trim: true,
   },
   passwordHash: {
     type: String,
-    require: true,
+    required: true,
     trim: true,
   },
   role: {
     type: String,
-    require: true,
+    required: true,
     trim: true,
   },
-  collections:[ {
-    type: Schema.Types.ObjectId,
-    ref: 'CalendarModel',
-  },{
-    type: Schema.Types.ObjectId,
-    ref: 'PomodoroModel',
-  },{
-    type: Schema.Types.ObjectId,
-    ref: 'noteModel',
-  },]
+  collections: [collectionSchema],
 });
-const User: Model<User> = model<User>('UserNotesModel', userSchema);
+const User: Model<User> = model<User>('ModelUser', userSchema);
 
 export default User;
