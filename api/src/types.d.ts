@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
-export type State<string> = 'To Do' | 'Doing' | 'Doed';
-export type Role<string> = 'Admin' | 'User' | 'Disabled';
+export type State = 'To Do' | 'Doing' | 'Doed';
+export type Role = 'Admin' | 'User' | 'Disabled';
 
 /** */
 export interface User extends Document {

@@ -1,6 +1,5 @@
 import { Schema, model, Model } from 'mongoose';
 import { User } from '../types';
-import collectionSchema from './ColectionsModel';
 
 const userSchema = new Schema({
   name: {
@@ -23,7 +22,11 @@ const userSchema = new Schema({
     required: true,
     trim: true,
   },
-  collections: [collectionSchema],
+  collections: {
+    Pomodoro: [{ type: Schema.Types.ObjectId, ref: 'PomodoroModel' }],
+    Calendar: [{ type: Schema.Types.ObjectId, ref: 'PomodoroModel' }],
+    Notes: [{ type: Schema.Types.ObjectId, ref: 'NoteModel' }],
+  },
 });
 const User: Model<User> = model<User>('ModelUser', userSchema);
 
