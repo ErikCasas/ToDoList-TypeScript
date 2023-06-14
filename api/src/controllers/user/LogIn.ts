@@ -5,8 +5,8 @@ import User from '../../models/UserModel';
 import { Request, Response } from 'express';
 
 const LogIn = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     if (!email || !password) {
       return res
         .status(400)
@@ -23,6 +23,7 @@ const LogIn = async (req: Request, res: Response) => {
         role: user?.role,
         email: user?.email,
       };
+      //saco el id de la info visible para que el id solo se maneje a traves del token
       const { id, ...info } = userToken;
 
       const Token = jwt.sign(userToken, process.env.JWT || 'default-secret');
