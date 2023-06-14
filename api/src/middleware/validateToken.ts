@@ -1,9 +1,6 @@
 require('dotenv').config();
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import { Router } from 'express';
-
-const router = Router();
 
 const validateToken = async (
   req: Request,
@@ -12,17 +9,22 @@ const validateToken = async (
 ) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-      return res.status(401).json({ message: 'No token provided' });
-    }
-    const decoded = jwt.verify(token, process.env.JWT || 'default-secret');
-
-    // pendiente definir el caso en el que puede ser aceptado a segun el esquema por hacer 
+    if (!token) return res.status(401).json('No token provided');
+    jwt.verify(
+      token,
+      process.env.JWT_SECRET || 'default-secret',
+      (err, decoded) => {
+        if (err) {
+          return res.status(401).json({ error: 'Invalid token' });
+        }
+        req.body = decoded;
+        return next();
+      }
+    );
+    return; //es con el fin de que retorne el valor final
   } catch (error) {
-    
+    return res.status(401).json({ message: 'Invalid token' });
   }
 };
 
-
-
-
+export default validateToken;
