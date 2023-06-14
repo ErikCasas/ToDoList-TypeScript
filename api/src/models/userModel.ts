@@ -11,6 +11,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     trim: true,
+    unique:true
   },
   passwordHash: {
     type: String,
@@ -28,6 +29,6 @@ const userSchema = new Schema({
     Notes: [{ type: Schema.Types.ObjectId, ref: 'NoteModel' }],
   },
 });
-const User: Model<User> = model<User>('ModelUser', userSchema);
+const User: Model<User> = model<User>('Users', userSchema);
 
 export default User;

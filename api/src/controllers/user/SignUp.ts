@@ -5,24 +5,25 @@ import { Request, Response } from 'express';
 
 const SignUp = async (req: Request, res: Response) => {
   try {
-    const { email, password, name } = req.body;
-    const exists = await User.findOne({ email });
-    if (!exists) {
-      bcrypt.hash(password, 10, async (_err, hash) => {
-        const newUser = new User({
-          name,
-          email,
-          passwordHash: hash,
-          role: 'User' as Role,
-        });
+    if (!req.body) return res.status(411).json('data is required');
 
-        await newUser.save();
-        return res
-          .status(201)
-          .json({ message: 'User created successfully', user: newUser });
-      });
-    }
-    return res.status(409).json('this user already exists');
+    const { email, password, name } = req.body;
+
+    const exists = await User.findOne({ email });
+    if (exists) return res.status(409).json('this user already exists');
+
+    const hash = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      name,
+      email,
+      passwordHash: hash,
+      role: 'User' as Role,
+    });
+
+    await newUser.save();
+    return res
+      .status(201)
+      .json({ message: 'User created successfully', user: newUser });
   } catch (error) {
     console.log('error', error);
     return res.status(500).json(error);
