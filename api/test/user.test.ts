@@ -3,6 +3,8 @@ import app from '../src/app';
 import { userLogIn } from './helpers/userTest';
 import { startServer, closeServer } from '../src/index';
 import { response } from 'express';
+import db from '../src/config';
+import mongoose from 'mongoose';
 
 const request = supertest(app);
 
@@ -12,6 +14,8 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await closeServer();
+  await mongoose.disconnect()
+  process.exit();
 });
 
 test('The path responds with a JSON :)', async () => {
@@ -20,7 +24,10 @@ test('The path responds with a JSON :)', async () => {
     .send(userLogIn)
     .expect(200)
     .expect('Content-Type', /application\/json/);
-    console.log(response.body)
+    expect((response.body)).toMatchObject({
+      Token:expect.any(String),
+      email:userLogIn.email
+    })
 });
 
 // test('no se que estoy haciendo', async()=>{
